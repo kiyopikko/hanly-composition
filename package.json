@@ -27,7 +27,11 @@
     "@nuxtjs/composition-api": "^0.12.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@vueuse/core": "^4.0.0-beta.4",
-    "nuxt": "^2.14.0"
+    "dayjs": "^1.8.33",
+    "leaflet": "^1.6.0",
+    "nuxt": "^2.14.0",
+    "ress": "^3.0.0",
+    "vue-avatar-cropper": "^1.0.6"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",
@@ -47,7 +51,9 @@
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
+    "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
+    "sass-loader": "^9.0.3",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
