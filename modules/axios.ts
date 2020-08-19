@@ -1,6 +1,12 @@
-// eslint-disable-next-line import/named
 import { reactive, toRefs } from '@nuxtjs/composition-api'
+import localStorage from 'store2'
 import { axios } from '~/plugins/axios'
+
+interface AxiosState {
+  data: any
+  error: string
+  loading: boolean
+}
 
 export const useAppAxiosExecute = ({
   method = 'GET',
@@ -17,18 +23,14 @@ export const useAppAxiosExecute = ({
     data: undefined,
     error: '',
     loading: false,
-  })
+  } as AxiosState)
 
-  async function execute(payload: Object) {
+  async function execute(payload?: Object) {
     state.loading = true
 
     try {
       const headers = {
-        Authorization:
-          'Bearer ' +
-          (process.browser
-            ? window.localStorage.getItem('hanly_access_token')
-            : ''),
+        Authorization: 'Bearer ' + localStorage('hanly_access_token'),
       }
       let result
       if (contentType === 'multipart/form-data') {
