@@ -10,12 +10,6 @@
 import { defineComponent, watch } from '@nuxtjs/composition-api'
 import { useAppAxiosExecute } from '~/modules/axios'
 
-interface SignUpFormValues {
-  nickname: string
-  email: string
-  password: string
-}
-
 export default defineComponent({
   layout: 'account',
   setup(_p, { root: { $router } }) {
