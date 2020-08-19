@@ -8,16 +8,18 @@ interface AxiosState {
   loading: boolean
 }
 
-export const useAppAxiosExecute = ({
+export const useAppAxios = ({
   method = 'GET',
   url,
   contentType = 'application/json',
   errorMessage = '予期せぬエラーが発生しました',
+  immediate,
 }: {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   url: string
   contentType?: string
   errorMessage?: string
+  immediate?: boolean
 }) => {
   const state = reactive({
     data: undefined,
@@ -56,6 +58,8 @@ export const useAppAxiosExecute = ({
       }, 3000)
     }
   }
+
+  if (immediate) execute()
 
   return {
     ...toRefs(state),

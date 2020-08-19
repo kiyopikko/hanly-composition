@@ -8,17 +8,12 @@
 
 <script lang="ts">
 import { defineComponent, watch } from '@nuxtjs/composition-api'
-import { useAppAxiosExecute } from '~/modules/axios'
+import { useAppAxios } from '~/modules/axios'
 
 export default defineComponent({
   layout: 'account',
   setup(_p, { root: { $router } }) {
-    const {
-      data,
-      error,
-      loading: isSending,
-      execute: signUp,
-    } = useAppAxiosExecute({
+    const { data, error, loading: isSending, execute: signUp } = useAppAxios({
       method: 'POST',
       url: '/api/signup',
       errorMessage: '登録済みのメールアドレスです',

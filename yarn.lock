@@ -12240,6 +12240,11 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
+vue-pull-to@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/vue-pull-to/-/vue-pull-to-0.1.8.tgz#00914cf32951230564a05549577f2cd18cd0e56e"
+  integrity sha512-mANDhY4xpK6FCpStz7oAkeKCw8K1SNu+DSvXLjLdj/oTiapKPqS2RmK+vv4d2z6wJ1VaL5ZWyp6O0Vuugus1Qg==
+
 vue-router@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.4.3.tgz#fa93768616ee338aa174f160ac965167fa572ffa"

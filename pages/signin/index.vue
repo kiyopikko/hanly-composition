@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, watch } from '@nuxtjs/composition-api'
 import localStorage from 'store2'
-import { useAppAxiosExecute } from '~/modules/axios'
+import { useAppAxios } from '~/modules/axios'
 
 export default defineComponent({
   layout: 'account',
@@ -20,7 +20,7 @@ export default defineComponent({
     const {
       loading: fetchingCredentials,
       execute: fetchClientCredentials,
-    } = useAppAxiosExecute({
+    } = useAppAxios({
       url: '/api/oauth/client-credentials',
     })
 
@@ -29,7 +29,7 @@ export default defineComponent({
       error,
       loading: signingIn,
       execute: signWithToken,
-    } = useAppAxiosExecute({
+    } = useAppAxios({
       url: '/api/oauth/token',
       method: 'POST',
       errorMessage: 'メールアドレスが存在しないか、パスワードが間違っています',
@@ -49,7 +49,6 @@ export default defineComponent({
       email: string
       password: string
     }) => {
-      // eslint-disable-next-line camelcase
       const { client_id, client_secret } = await fetchClientCredentials()
       signWithToken({
         grant_type: 'password',
