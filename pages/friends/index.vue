@@ -41,7 +41,7 @@
       <button
         class="pin"
         :class="isPinning ? 'isPinning' : ''"
-        :disabled="isPinning || !coords"
+        :disabled="isPinning || !coords || !coords.latitude"
         @click="pin"
       />
     </div>
