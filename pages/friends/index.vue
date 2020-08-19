@@ -11,16 +11,16 @@
         />
         <div class="user__txt">マイページ</div>
       </nuxt-link>
-      <div v-if="friendsNormalized.length > 0" class="friends">
+      <div v-if="flattenFriends.length > 0" class="friends">
         <h2 class="headline">友だち</h2>
         <ul>
           <FriendItem
-            v-for="(friend, i) in friendsNormalized"
+            v-for="(friend, i) in flattenFriends"
             :key="i"
             :to="`/friends/${friend.id}`"
             :nickname="friend.nickname"
-            :date="friend.date"
-            :img="friend.img || ''"
+            :date="friend.datetime"
+            :img="friend.face_image_url || ''"
             :icon-placeholder="getPlaceholder(i)"
           />
         </ul>
@@ -38,7 +38,7 @@
       <button
         class="pin"
         :class="isPinning ? 'isPinning' : ''"
-        :disabled="isPinning"
+        :disabled="isPinning || !coords"
         @click="pin"
       />
     </div>
@@ -50,8 +50,7 @@ import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import { useGeolocation } from '@vueuse/core'
 import PullTo from 'vue-pull-to'
 import { useAppAxios } from '~/modules/axios'
-import { Friend } from '~/types/app'
-import { dayjs } from '~/plugins/dayjs'
+import { convertFlattenFriend } from '~/modules/friend'
 
 const TOP_CONFIG = {
   pullText: '引っ張って更新',
@@ -85,15 +84,8 @@ export default defineComponent({
       url: '/api/my/pin',
     })
 
-    const friendsNormalized = computed(() =>
-      friends && friends.value
-        ? friends.value.map((f: Friend) => ({
-            id: f.id,
-            nickname: f.nickname,
-            date: f.pin ? dayjs(f.pin.datetime).format('YYYY/MM/DD HH:mm') : '',
-            img: f.face_image_url,
-          }))
-        : []
+    const flattenFriends = computed(() =>
+      friends && friends.value ? friends.value.map(convertFlattenFriend) : []
     )
     const face_image_url = computed(() => store.getters['me/face_image_url'])
 
@@ -110,11 +102,12 @@ export default defineComponent({
     }
 
     return {
-      friendsNormalized,
+      flattenFriends,
       face_image_url,
       isPinning,
       TOP_CONFIG,
       getPlaceholder,
+      coords,
       // function
       pin,
       refresh,

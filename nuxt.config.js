@@ -75,5 +75,6 @@ export default {
   },
   env: {
     baseURL,
+    uploadUrl: '/api/me/image',
   },
 }
