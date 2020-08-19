@@ -1,3 +1,5 @@
+const baseURL = 'https://hanly.herokuapp.com/'
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -70,5 +72,8 @@ export default {
   generate: {
     // choose to suit your project
     interval: 2000,
+  },
+  env: {
+    baseURL,
   },
 }
