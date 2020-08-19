@@ -11,30 +11,33 @@
         />
         <div class="user__txt">マイページ</div>
       </nuxt-link>
-      <div v-if="flattenFriends.length > 0" class="friends">
-        <h2 class="headline">友だち</h2>
-        <ul>
-          <FriendItem
-            v-for="(friend, i) in flattenFriends"
-            :key="i"
-            :to="`/friends/${friend.id}`"
-            :nickname="friend.nickname"
-            :date="friend.datetime"
-            :img="friend.face_image_url || ''"
-            :icon-placeholder="getPlaceholder(i)"
+      <Loader v-if="$fetchState.pending" />
+      <template v-else>
+        <div v-if="flattenFriends.length > 0" class="friends">
+          <h2 class="headline">友だち</h2>
+          <ul>
+            <FriendItem
+              v-for="(friend, i) in flattenFriends"
+              :key="i"
+              :to="`/friends/${friend.id}`"
+              :nickname="friend.nickname"
+              :date="friend.datetime"
+              :img="friend.face_image_url || ''"
+              :icon-placeholder="getPlaceholder(i)"
+            />
+          </ul>
+        </div>
+        <div v-else class="noFriends">
+          <img
+            src="https://res.cloudinary.com/kiyopikko/image/upload/v1562219254/hanly-gray_2x_pdy6qo.png"
+            alt
+            :width="178"
           />
-        </ul>
-      </div>
-      <div v-else class="noFriends">
-        <img
-          src="https://res.cloudinary.com/kiyopikko/image/upload/v1562219254/hanly-gray_2x_pdy6qo.png"
-          alt
-          :width="178"
-        />
-        <p class="txt">
-          右下のボタンからピンを打って近くの友だちを探しましょう
-        </p>
-      </div>
+          <p class="txt">
+            右下のボタンからピンを打って近くの友だちを探しましょう
+          </p>
+        </div>
+      </template>
       <button
         class="pin"
         :class="isPinning ? 'isPinning' : ''"
@@ -46,11 +49,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  useContext,
+  ref,
+} from '@nuxtjs/composition-api'
 import { useGeolocation } from '@vueuse/core'
 import PullTo from 'vue-pull-to'
 import { useAppAxios } from '~/modules/axios'
 import { convertFlattenFriend } from '~/modules/friend'
+import { useAppFetch } from '~/modules/fetch'
 
 const TOP_CONFIG = {
   pullText: '引っ張って更新',
@@ -75,10 +84,13 @@ export default defineComponent({
   setup() {
     const { store } = useContext()
     const { coords } = useGeolocation()
-    const { data: friends, execute: refetchFriends } = useAppAxios({
+    const friends = ref([])
+
+    const { fetch: refetchFriends } = useAppFetch({
+      data: friends,
       url: '/api/friends',
-      immediate: true,
     })
+
     const { loading: isPinning, execute: pinAndMakeFriends } = useAppAxios({
       method: 'POST',
       url: '/api/my/pin',
