@@ -54,6 +54,7 @@ import {
   computed,
   useContext,
   ref,
+  useMeta,
 } from '@nuxtjs/composition-api'
 import { useGeolocation } from '@vueuse/core'
 import PullTo from 'vue-pull-to'
@@ -78,6 +79,7 @@ const getPlaceholder = (i: number) => {
 }
 
 export default defineComponent({
+  head: {},
   components: {
     PullTo,
   },
@@ -112,6 +114,8 @@ export default defineComponent({
       await refetchFriends()
       loaded('done')
     }
+
+    useMeta({ title: '友だち一覧 | Hanly' })
 
     return {
       flattenFriends,

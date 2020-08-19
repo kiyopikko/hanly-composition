@@ -7,11 +7,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from '@nuxtjs/composition-api'
+import { defineComponent, watch, useMeta } from '@nuxtjs/composition-api'
 import { useAppAxios } from '~/modules/axios'
 
 export default defineComponent({
   layout: 'account',
+  head: {},
   setup(_p, { root: { $router } }) {
     const { data, error, loading: isSending, execute: signUp } = useAppAxios({
       method: 'POST',
@@ -24,6 +25,8 @@ export default defineComponent({
         $router.push('/signin')
       }
     })
+
+    useMeta({ title: '新規登録 | Hanly' })
 
     return {
       isSending,

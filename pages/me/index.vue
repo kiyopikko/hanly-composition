@@ -14,10 +14,16 @@
 
 <script lang="ts">
 import localStorage from 'store2'
-import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  useContext,
+  useMeta,
+} from '@nuxtjs/composition-api'
 import { dayjs } from '~/plugins/dayjs'
 
 export default defineComponent({
+  head: {},
   setup(_p, { root: { $router } }) {
     const { store } = useContext()
     const face_image_url = computed(() => store.getters['me/face_image_url'])
@@ -31,6 +37,8 @@ export default defineComponent({
       localStorage('hanly_access_token', '')
       $router.push('/')
     }
+
+    useMeta({ title: 'マイページ | Hanly' })
 
     return {
       face_image_url,

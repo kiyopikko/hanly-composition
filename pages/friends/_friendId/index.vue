@@ -16,14 +16,18 @@ import {
   useContext,
   computed,
   ref,
+  useMeta,
+  watch,
 } from '@nuxtjs/composition-api'
 import { convertFlattenFriend } from '~/modules/friend'
 import { useAppFetch } from '~/modules/fetch'
 
 export default defineComponent({
+  head: {},
   setup() {
     const { route } = useContext()
-    const friend = ref([])
+    const { title } = useMeta({ title: '読み込み中... | Hanly' })
+    const friend = ref(null)
 
     useAppFetch({
       data: friend,
@@ -33,6 +37,12 @@ export default defineComponent({
     const flattenFriend = computed(() =>
       friend && friend.value ? convertFlattenFriend(friend.value) : null
     )
+
+    watch([friend], () => {
+      if (friend.value) {
+        title.value = `${friend.value.nickname} | Hanly`
+      }
+    })
 
     return {
       flattenFriend,

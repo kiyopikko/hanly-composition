@@ -16,10 +16,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useMeta } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   layout: 'account',
+  head: {},
+  setup() {
+    useMeta({ title: 'Hanly - ピンを打って友だちの場所を確認しよう' })
+  },
 })
 </script>
 

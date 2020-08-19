@@ -10,12 +10,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from '@nuxtjs/composition-api'
+import { defineComponent, watch, useMeta } from '@nuxtjs/composition-api'
 import localStorage from 'store2'
 import { useAppAxios } from '~/modules/axios'
 
 export default defineComponent({
   layout: 'account',
+  head: {},
   setup(_p, { root: { $router } }) {
     const {
       loading: fetchingCredentials,
@@ -59,6 +60,8 @@ export default defineComponent({
         password,
       })
     }
+
+    useMeta({ title: 'ログイン | Hanly' })
 
     return {
       signingIn,
