@@ -1,5 +1,5 @@
 <template>
-  <div class="loaderWrap">
+  <div class="loaderWrap" :class="{ withoutBack }">
     <div class="loader">
       <span></span>
       <span></span>
@@ -13,7 +13,13 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 
-export default defineComponent({})
+export default defineComponent({
+  props: {
+    withoutBack: {
+      type: Boolean,
+    },
+  },
+})
 </script>
 
 <style lang="scss" scoped>
@@ -31,6 +37,9 @@ $loaderBase: 20px;
   align-items: center;
   justify-content: center;
   background: rgba($color: #000, $alpha: 0.6);
+  &.withoutBack {
+    background: none;
+  }
 }
 
 .loader {
